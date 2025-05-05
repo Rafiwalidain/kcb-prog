@@ -3,6 +3,7 @@ import networkx as nx
 import folium
 import requests
 import matplotlib.pyplot as plt
+from geopy.distance import geodesic
 
 # Fungsi geocoding dari alamat ke koordinat
 def geocode_alamat(alamat):
@@ -23,9 +24,18 @@ alamat_tujuan = input("Masukkan alamat tujuan (contoh: Jl. Kalijudan No.98, Sura
 start_coords = geocode_alamat(alamat_awal)
 end_coords = geocode_alamat(alamat_tujuan)
 
-# Ambil graf jalan di Surabaya Timur
-lokasi_area = "Surabaya, Surabaya, Indonesia"
-G = ox.graph_from_point(start_coords, dist=10000, network_type='drive')
+# Hitung jarak antar dua titik dalam meter
+jarak_meter = geodesic(start_coords, end_coords).meters
+
+# Tentukan titik tengah antara koordinat start dan end
+mid_lat = (start_coords[0] + end_coords[0]) / 2
+mid_lon = (start_coords[1] + end_coords[1]) / 2
+
+# Tentukan radius ambil graf dengan buffer 1 km
+radius = jarak_meter + 1000  # meter
+
+# Ambil graf berdasarkan titik tengah dan radius tersebut
+G = ox.graph_from_point((mid_lat, mid_lon), dist=radius, network_type='drive')
 
 # Cari simpul terdekat di graf
 start_node = ox.distance.nearest_nodes(G, start_coords[1], start_coords[0])
