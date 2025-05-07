@@ -73,7 +73,7 @@ for i in range(len(route) - 1):
     jalan_dilewati.append(street)
 
 print("\n✅ Peta rute berhasil dibuat!")
-print("📁 Silakan buka file 'rute_user_input.html' di browser.")
+print("📁 Silakan lihat file 'rute_user_input.html' di browser.")
 print("\n📁 Grafik jalan yang dilalui:")
 print("Silakan buka file 'graf_jalan.png' untuk melihat graf jalan yang dilewati rute.")
 
