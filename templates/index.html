@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Routing A*</title>
+</head>
+<body>
+    <h2>🚚 Sistem Rute A* dari Gudang ke Tujuan</h2>
+    <form method="POST">
+        <label>Masukkan alamat tujuan:</label>
+        <input type="text" name="alamat_tujuan" required>
+        <button type="submit">Cari Rute</button>
+    </form>
+
+    {% if show_result %}
+        <h3>✅ Rute dari Gudang ke: {{ alamat_tujuan }}</h3>
+        <h4>🛣️ Daftar Jalan yang Dilalui:</h4>
+        <ol>
+            {% for jalan in jalan_dilewati %}
+                <li>{{ jalan }}</li>
+            {% endfor %}
+        </ol>
+        <p><a href="/peta" target="_blank">🌍 Lihat Peta Rute (HTML)</a></p>
+        <p><img src="{{ url_for('static', filename='graf_jalan.png') }}" alt="Graf Jalan" width="300"></p>
+    {% elif error %}
+        <p style="color:red;">❌ Terjadi kesalahan: {{ error }}</p>
+    {% endif %}
+</body>
+</html>
